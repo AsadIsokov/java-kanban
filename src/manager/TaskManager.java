@@ -1,12 +1,11 @@
 package manager;
-import aboutTasks.Epic;
-import aboutTasks.TaskStatus;
-import aboutTasks.Subtask;
-import aboutTasks.Task;
+import model.Epic;
+import model.TaskStatus;
+import model.Subtask;
+import model.Task;
 
 import java.util.ArrayList;
 import  java.util.HashMap;
-import java.util.Objects;
 
 public class TaskManager {
     private static int count = 1;
@@ -134,7 +133,7 @@ public class TaskManager {
 
     public void deleteSubtaskById(int id){
         if(subtasks.containsKey(id)){
-            epics.get(subtasks.get(id).getEpicId()).delSubtask(id);
+            epics.get(subtasks.get(id).getEpicId()).deleteSubtask(id);
             subtasks.remove(id);
         }
     }

@@ -1,4 +1,4 @@
-package aboutTasks;
+package model;
 
 public enum TaskStatus {
     NEW,

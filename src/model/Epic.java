@@ -1,4 +1,4 @@
-package aboutTasks;
+package model;
 
 import java.util.ArrayList;
 
@@ -25,16 +25,20 @@ public class Epic extends Task {
     public void clearSubtasks(){
         subtasks.clear();
     }
-    public void delSubtask(int id){
+    public void deleteSubtask(int id){
         if(subtasks.contains(subtasks.get(id))) {
             subtasks.remove(id);
         }
     }
 
     @Override
-    public String toString(){
-        return ("Epic{ name: " + getName() + ", description: " + getDescription() + ", id:" + getId() + ", status: " + getStatus());
+    public String toString() {
+        return "Epic{" +
+                "subtasks=" + subtasks +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
-
-
 }

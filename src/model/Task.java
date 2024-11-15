@@ -1,10 +1,10 @@
-package aboutTasks;
+package model;
 
 public class Task {
     protected int id;
-    private String name;
-    private String description;
-    private TaskStatus status;
+    protected String name;
+    protected String description;
+    protected TaskStatus status;
 
     public Task(String name, String description){
         this.name = name;
@@ -45,8 +45,12 @@ public class Task {
     }
 
     @Override
-    public String toString(){
-        return ("Task{ name: " + name + ", description: " + description + ", status: " + status);
-
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

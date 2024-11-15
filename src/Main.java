@@ -1,7 +1,7 @@
-import aboutTasks.Epic;
-import aboutTasks.TaskStatus;
-import aboutTasks.Subtask;
-import aboutTasks.Task;
+import model.Epic;
+import model.TaskStatus;
+import model.Subtask;
+import model.Task;
 import manager.TaskManager;
 
 public class Main {
