@@ -1,23 +1,15 @@
-package AboutTasks;
+package aboutTasks;
 
 public class Task {
-    private int id;
+    protected int id;
     private String name;
     private String description;
-    private Status status;
+    private TaskStatus status;
 
-    public Task(int id, String name, String description, Status status){
-        this.id = id;
+    public Task(String name, String description){
         this.name = name;
         this.description = description;
-        this.status = status;
-    }
-
-    public Task(int id, String name, String description){
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.status = Status.NEW;
+        this.status = TaskStatus.NEW;
     }
 
     public Integer getId() {
@@ -44,11 +36,17 @@ public class Task {
         this.description = description;
     }
 
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString(){
+        return ("Task{ name: " + name + ", description: " + description + ", status: " + status);
+
     }
 }
