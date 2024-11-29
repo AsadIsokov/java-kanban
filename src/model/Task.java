@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Task {
     protected int id;
     protected String name;
@@ -11,6 +13,7 @@ public class Task {
         this.description = description;
         this.status = TaskStatus.NEW;
     }
+
 
     public Integer getId() {
         return id;
@@ -42,6 +45,15 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
+        Task anyTask = (Task) obj;
+        return id == anyTask.getId();
     }
 
     @Override
