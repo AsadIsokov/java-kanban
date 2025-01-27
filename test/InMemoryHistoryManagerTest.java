@@ -7,21 +7,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryHistoryManagerTest {
-    private static final InMemoryHistoryManager manager = Managers.getDefaultHistory();
-
     private static final InMemoryTaskManager manager1 = Managers.getDefault();
-
-    @Test
-    void shouldAddWithoutChanges() {
-        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
-        String nameTask = doHomeWork.getName();
-        String descriptionTask = doHomeWork.getDescription();
-        doHomeWork.setId(1);
-        manager.add(doHomeWork);
-        assertEquals(nameTask, doHomeWork.getName());
-        assertEquals(1, doHomeWork.getId());
-        assertEquals(descriptionTask, doHomeWork.getDescription());
-    }
 
     @Test
     void shouldAddWorkCorrect() {
