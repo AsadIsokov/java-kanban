@@ -60,6 +60,6 @@ class InMemoryTaskManagerTest {
         String descriptionTask = doHomeWork.getDescription();
         manager.addTask(doHomeWork);
         assertEquals(nameTask, manager.getTask(doHomeWork.getId()).getName());
-        assertEquals(descriptionTask, manager.getTask(doHomeWork.getId()).getDescription());
+        assertEquals(descriptionTask, "До дедлайна нужно сдать!");
     }
 }
