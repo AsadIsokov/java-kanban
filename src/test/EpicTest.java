@@ -9,9 +9,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class EpicTest {
     private static final InMemoryTaskManager manager = Managers.getDefault();
-    //проверьте, что объект Epic нельзя добавить в самого себя в виде подзадачи;
+
     @Test
-    void shouldEpicsEqualsById(){
+    void shouldEpicsEqualsById() {
         Epic epic1 = new Epic("Помыть машину!", "Мойка - самообслуживание!");
         manager.addEpic(epic1);
         Epic epic2 = new Epic("Помыть мотоцикл", "Это мото. Тут надо платная мойка!");

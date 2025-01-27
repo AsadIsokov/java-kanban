@@ -12,9 +12,9 @@ class InMemoryHistoryManagerTest {
     private static final InMemoryHistoryManager manager = Managers.getDefaultHistory();
 
     private static final InMemoryTaskManager manager1 = Managers.getDefault();
-    //убедитесь, что задачи, добавляемые в HistoryManager, сохраняют предыдущую версию задачи и её данных.
+
     @Test
-    void shouldAddWithoutChanges(){
+    void shouldAddWithoutChanges() {
         Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
         String nameTask = doHomeWork.getName();
         String descriptionTask = doHomeWork.getDescription();
@@ -25,9 +25,8 @@ class InMemoryHistoryManagerTest {
         assertEquals(descriptionTask, doHomeWork.getDescription());
     }
 
-    //Проверьте, что встроенный связный список версий, а также операции добавления и удаления работают корректно.
     @Test
-    void shouldAddWorkCorrect(){
+    void shouldAddWorkCorrect() {
         Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
         Task doHomeWork1 = new Task("Сделать дз по математике!", "До дедлайна не нужно сдать!");
         manager1.addTask(doHomeWork);

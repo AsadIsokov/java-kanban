@@ -11,9 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class SubtaskTest {
     private static final InMemoryTaskManager manager = Managers.getDefault();
 
-    //проверьте, что наследники класса Task равны друг другу, если равен их id;
     @Test
-    void shouldSubtasksEqualById(){
+    void shouldSubtasksEqualById() {
         Epic epic1 = new Epic("Помыть машину!", "Мойка - самообслуживание!");
         Epic epic2 = new Epic("Починить холодильник!", "Выключить перед выполнением!");
         manager.addEpic(epic1);

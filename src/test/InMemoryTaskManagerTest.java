@@ -14,13 +14,12 @@ class InMemoryTaskManagerTest {
     private static InMemoryTaskManager manager;
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         manager = Managers.getDefault();
     }
-    //проверьте, что объект Epic нельзя добавить в самого себя в виде подзадачи;
-    // В пачке так посоветовал сделать Глеб Шишков (наш учитель)
+
     @Test
-    void shouldEpicNotAddEpicLikeSubtask(){
+    void shouldEpicNotAddEpicLikeSubtask() {
         Epic epic = new Epic("Помыть машину!", "Мойка - самообслуживание!");
         manager.addEpic(epic);
         Subtask subtask = new Subtask("Починить холодильник!", "Выключить перед выполнением!", epic.getId());
@@ -29,9 +28,8 @@ class InMemoryTaskManagerTest {
         assertNotEquals(subtask.getId(), subtask.getEpicId());
     }
 
-    //проверьте, что InMemoryTaskManager действительно добавляет задачи разного типа и может найти их по id;
     @Test
-    void shouldAddAllTypesTasksAndFindThemById(){
+    void shouldAddAllTypesTasksAndFindThemById() {
         Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
         manager.addTask(doHomeWork);
 
@@ -52,9 +50,8 @@ class InMemoryTaskManagerTest {
         assertNotNull(manager.getSubtask(subtask2.getId()));
     }
 
-    //создайте тест, в котором проверяется неизменность задачи (по всем полям) при добавлении задачи в менеджер
     @Test
-    void shouldStabilityTask(){
+    void shouldStabilityTask() {
         Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
         String nameTask = doHomeWork.getName();
         String descriptionTask = doHomeWork.getDescription();

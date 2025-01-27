@@ -1,6 +1,5 @@
 import manager.*;
 import model.Epic;
-import model.TaskStatus;
 import model.Subtask;
 import model.Task;
 
@@ -36,11 +35,8 @@ public class Main {
         printAllTasks(manager);
 
 
-
-
-
-
     }
+
     private static void printAllTasks(InMemoryTaskManager manager) {
         System.out.println("Задачи:");
         for (Task task : manager.getTasks()) {

@@ -9,9 +9,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ManagersTest {
-    //убедитесь, что утилитарный класс всегда возвращает проинициализированные и готовые к работе экземпляры менеджеров;
     @Test
-    void returnCheck(){
+    void returnCheck() {
         InMemoryTaskManager manager1 = new InMemoryTaskManager();
         InMemoryHistoryManager manager2 = new InMemoryHistoryManager();
         InMemoryTaskManager manager3 = Managers.getDefault();
