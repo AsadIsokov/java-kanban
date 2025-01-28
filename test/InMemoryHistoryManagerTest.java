@@ -15,8 +15,8 @@ class InMemoryHistoryManagerTest {
         Task doHomeWork1 = new Task("Сделать дз по математике!", "До дедлайна не нужно сдать!");
         manager1.addTask(doHomeWork);
         manager1.addTask(doHomeWork1);
-        manager1.getTask(doHomeWork.getId());
-        manager1.getTask(doHomeWork1.getId());
+        manager1.getTaskById(doHomeWork.getId());
+        manager1.getTaskById(doHomeWork1.getId());
         ArrayList<Task> anyArray = new ArrayList<>();
         anyArray.add(doHomeWork);
         anyArray.add(doHomeWork1);

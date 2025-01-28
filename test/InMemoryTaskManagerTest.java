@@ -43,9 +43,9 @@ class InMemoryTaskManagerTest {
         assertNotNull(manager.getEpics());
         assertNotNull(manager.getSubtasks());
 
-        assertNotNull(manager.getTask(doHomeWork.getId()));
-        assertNotNull(manager.getEpic(epic.getId()));
-        assertNotNull(manager.getSubtask(subtask2.getId()));
+        assertNotNull(manager.getTaskById(doHomeWork.getId()));
+        assertNotNull(manager.getEpicById(epic.getId()));
+        assertNotNull(manager.getSubtaskById(subtask2.getId()));
     }
 
     @Test
@@ -54,7 +54,7 @@ class InMemoryTaskManagerTest {
         String nameTask = doHomeWork.getName();
         String descriptionTask = doHomeWork.getDescription();
         manager.addTask(doHomeWork);
-        assertEquals(nameTask, manager.getTask(doHomeWork.getId()).getName());
+        assertEquals(nameTask, manager.getTaskById(doHomeWork.getId()).getName());
         assertEquals(descriptionTask, "До дедлайна нужно сдать!");
     }
 }

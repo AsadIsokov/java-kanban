@@ -21,14 +21,14 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public List<Task> getTasks() {
+    public List<Task> getHistory() {
         List<Task> historyArrayList = new ArrayList<>();
-        Node<Task> counter = head;
-        while (counter.getNext() != null) {
+        Node<Task> counter = tail;
+        while (counter.getPrev() != null) {
             historyArrayList.add(counter.getData());
-            counter = counter.getNext();
+            counter = counter.getPrev();
         }
-        historyArrayList.add(tail.getData());
+        historyArrayList.add(head.getData());
         return historyArrayList;
     }
 

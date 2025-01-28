@@ -7,6 +7,7 @@ import model.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
     private static int count = 1;
@@ -52,19 +53,19 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public Task getTask(int id) {
+    public Task getTaskById(int id) {
         historyManager.add(tasks.get(id));
         return tasks.get(id);
     }
 
     @Override
-    public Subtask getSubtask(int id) {
+    public Subtask getSubtaskById(int id) {
         historyManager.add(subtasks.get(id));
         return subtasks.get(id);
     }
 
     @Override
-    public Epic getEpic(int id) {
+    public Epic getEpicById(int id) {
         historyManager.add(epics.get(id));
         return epics.get(id);
     }
@@ -183,8 +184,8 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public HistoryManager getHistoryList() {
-        return historyManager;
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
 
