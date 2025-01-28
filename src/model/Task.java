@@ -1,14 +1,12 @@
 package model;
 
-import java.util.Objects;
-
 public class Task {
     protected int id;
     protected String name;
     protected String description;
     protected TaskStatus status;
 
-    public Task(String name, String description){
+    public Task(String name, String description) {
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;

@@ -1,5 +1,3 @@
-package test;
-
 import manager.InMemoryTaskManager;
 import manager.Managers;
 import model.Task;
@@ -9,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class TaskTest {
     private static final InMemoryTaskManager manager = Managers.getDefault();
-    //проверьте, что экземпляры класса Task равны друг другу, если равен их id;
+
     @Test
     void shouldTasksEqualById() {
         Task cleanHome1 = new Task("Убрать комнату / дом!", "Нужно убраться на выходных!");
@@ -19,7 +17,6 @@ class TaskTest {
         cleanHome2.setId(cleanHome1Id);
         assertEquals(cleanHome1, cleanHome2);
     }
-
 
 
 }
