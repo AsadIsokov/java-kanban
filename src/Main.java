@@ -1,6 +1,5 @@
 import manager.*;
 import model.Epic;
-import model.TaskStatus;
 import model.Subtask;
 import model.Task;
 
@@ -25,19 +24,19 @@ public class Main {
         manager.addSubtask(subtask2);
         manager.addSubtask(subtask3);
 
-        manager.getTask(2);
-        manager.getSubtask(6);
-        manager.getSubtask(7);
-        manager.getEpic(4);
-        manager.getEpic(3);
+        manager.getTaskById(2);
+        manager.getSubtaskById(6);
+        manager.getSubtaskById(7);
+        manager.getSubtaskById(7);
+        manager.getEpicById(4);
+        manager.getEpicById(3);
+        manager.getSubtaskById(7);
+        manager.getEpicById(3);
         printAllTasks(manager);
 
 
-
-
-
-
     }
+
     private static void printAllTasks(InMemoryTaskManager manager) {
         System.out.println("Задачи:");
         for (Task task : manager.getTasks()) {
@@ -56,7 +55,7 @@ public class Main {
         }
 
         System.out.println("История:");
-        for (Task task : manager.getHistoryList().getHistory()) {
+        for (Task task : manager.getHistory()) {
             System.out.println(task);
         }
     }
