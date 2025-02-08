@@ -15,6 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     private int getCount() {
         return count++;
     }
+
     public void setCount(int i) {
         count = i;
     }
