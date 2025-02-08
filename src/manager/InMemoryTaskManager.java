@@ -15,6 +15,9 @@ public class InMemoryTaskManager implements TaskManager {
     private int getCount() {
         return count++;
     }
+    public void setCount(int i) {
+        count = i;
+    }
 
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
@@ -187,6 +190,5 @@ public class InMemoryTaskManager implements TaskManager {
     public List<Task> getHistory() {
         return historyManager.getHistory();
     }
-
 
 }
