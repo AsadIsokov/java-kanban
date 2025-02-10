@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    protected int count = 1;
+    protected static int count = 1;
 
     private int getCount() {
         return count++;

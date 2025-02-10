@@ -12,10 +12,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     public FileBackedTaskManager(String fileName) {
         this.memoryFile = new File(fileName);
+        setCountOne();
     }
 
     public FileBackedTaskManager(File file) {
         this.memoryFile = file;
+        setCountOne();
+    }
+
+    protected void setCountOne() {
+        InMemoryTaskManager.count = 1;
     }
 
     @Override
