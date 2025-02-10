@@ -10,14 +10,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class InMemoryTaskManager implements TaskManager {
-    private static int count = 1;
+    protected int count = 1;
 
     private int getCount() {
         return count++;
-    }
-
-    public void setCount(int i) {
-        count = i;
     }
 
     private HashMap<Integer, Task> tasks = new HashMap<>();

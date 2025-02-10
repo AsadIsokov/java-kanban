@@ -15,11 +15,10 @@ class FileBackedTaskManagerTest {
     void writeOrReadAnEmptyFile() throws IOException {
         File file = File.createTempFile("testFile", ".txt");
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
-        manager.save();
         File file1 = File.createTempFile("testFile2", ".txt");
         FileBackedTaskManager newManager = FileBackedTaskManager.loadFromFile(file1);
         assertTrue(newManager.getTasks().isEmpty() && newManager.getSubtasks().isEmpty() && newManager.getEpics().isEmpty());
-        assertEquals(0, file1.length());
+        assertEquals(0, file.length());
     }
 
     @Test

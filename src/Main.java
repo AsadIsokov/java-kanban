@@ -26,7 +26,6 @@ public class Main {
         manager2.addSubtask(subtask2);
         manager2.addSubtask(subtask3);
 
-
         FileBackedTaskManager manager1 = FileBackedTaskManager.loadFromFile(new File("tasks.txt"));
         System.out.println(manager1.getTasks());
         System.out.println(manager1.getEpics());
