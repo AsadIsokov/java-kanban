@@ -8,7 +8,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
-    final private File memoryFile;
+    private final File memoryFile;
 
     public FileBackedTaskManager(String fileName) {
         this.memoryFile = new File(fileName);
