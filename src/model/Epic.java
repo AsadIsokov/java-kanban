@@ -1,6 +1,10 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Epic extends Task {
     public Epic(String name, String description) {
@@ -9,6 +13,24 @@ public class Epic extends Task {
 
     ArrayList<Subtask> subtasks = new ArrayList<>();
 
+    public void startTimeOfEpic() {
+        List<Subtask> sortedListByDuration = subtasks.stream()
+                .sorted(Comparator.comparingLong(Subtask::getSubtaskMinute))
+                .toList();
+        this.setStartTime(sortedListByDuration.get(0).getStartTime());
+    }
+
+    public void durationOfEpic() {
+        long duration1 = subtasks.stream()
+                .mapToLong(subtask -> subtask.getDuration().toMinutes())
+                .sum();
+        this.setDuration(Duration.ofMinutes(duration1));
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        return this.startTime.plusMinutes(this.duration.toMinutes());
+    }
 
     public ArrayList<Subtask> getSubtasks() {
         return subtasks;
@@ -40,6 +62,8 @@ public class Epic extends Task {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", status=" + status +
+                ", duration=" + duration.toMinutes() +
+                ", startTime=" + startTime.format(TEXT_FORMAT) +
                 '}';
     }
 }

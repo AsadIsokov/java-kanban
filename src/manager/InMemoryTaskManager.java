@@ -5,9 +5,9 @@ import model.TaskStatus;
 import model.Subtask;
 import model.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     protected static int count = 1;
@@ -72,17 +72,23 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
-        task.setId(getCount());
-        tasks.put(task.getId(), task);
+        if (checkInterSectionTask(task)) {
+            task.setId(getCount());
+            tasks.put(task.getId(), task);
+        }
     }
 
     @Override
     public void addSubtask(Subtask subtask) {
-        subtask.setId(getCount());
-        subtasks.put(subtask.getId(), subtask);
-        epics.get(subtask.getEpicId()).addSubtasks(subtask);
-        updateEpic(epics.get(subtask.getEpicId()));
-        statusControl(epics.get(subtask.getEpicId()));
+        if (checkIntersectionSubtask(subtask)) {
+            subtask.setId(getCount());
+            subtasks.put(subtask.getId(), subtask);
+            epics.get(subtask.getEpicId()).addSubtasks(subtask);
+            updateEpic(epics.get(subtask.getEpicId()));
+            epics.get(subtask.getEpicId()).startTimeOfEpic();
+            epics.get(subtask.getEpicId()).durationOfEpic();
+            statusControl(epics.get(subtask.getEpicId()));
+        }
     }
 
     @Override
@@ -162,6 +168,8 @@ public class InMemoryTaskManager implements TaskManager {
     private void statusControl(Epic epic) {
         if (epic.getSubtasks().isEmpty()) {
             epic.setStatus(TaskStatus.NEW);
+            epic.setDuration(Duration.ZERO);
+            epic.setStartTime(null);
         } else {
             int countNewSubtask = 0;
             int countDoneSubtask = 0;
@@ -186,6 +194,46 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         return historyManager.getHistory();
+    }
+
+    public TreeSet<Task> getPrioritizedTasks() {
+        TreeSet<Task> sortedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
+        for (Task elem : tasks.values()) {
+            if (elem.getStartTime() != null) {
+                sortedTasks.add(elem);
+            }
+        }
+        return sortedTasks;
+    }
+
+    public TreeSet<Subtask> getPrioritizedSubtasks() {
+        TreeSet<Subtask> sortedSubtasks = new TreeSet<>(Comparator.comparing(Subtask::getStartTime));
+        for (Subtask elem : subtasks.values()) {
+            if (elem.getStartTime() != null) {
+                sortedSubtasks.add(elem);
+            }
+        }
+        return sortedSubtasks;
+    }
+
+    public boolean checkInterSectionTask(Task task) {
+        for (Task value : getPrioritizedTasks()) {
+            if (task.getEndTime().isAfter(value.getStartTime()) &&
+                    task.getStartTime().isBefore(value.getStartTime())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean checkIntersectionSubtask(Subtask subtask) {
+        for (Subtask value : getPrioritizedSubtasks()) {
+            if (subtask.getEndTime().isAfter(value.getStartTime()) &&
+                    subtask.getStartTime().isBefore(value.getStartTime())) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
