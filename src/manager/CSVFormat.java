@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CSVFormat {
-    static final private DateTimeFormatter TEXT_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
+    static final DateTimeFormatter TEXT_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
 
     public static String toString(Task task) {
         if (task instanceof Epic) {
