@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Task {
-    static final public DateTimeFormatter TEXT_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
+    static final DateTimeFormatter TEXT_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss dd.MM.yyyy");
 
     protected int id;
     protected String name;
