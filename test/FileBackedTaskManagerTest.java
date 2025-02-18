@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -32,8 +34,10 @@ class FileBackedTaskManagerTest {
     void writeSomeTasks() {
         File file = new File("testFile4");
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
-        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
-        Task helpToFriend = new Task("Помочь другу!", "Помочь чтобы его не обидеть!");
+        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!",
+                LocalDateTime.of(2025, 2, 15, 12, 55), Duration.ofMinutes(23));
+        Task helpToFriend = new Task("Помочь другу!", "Помочь чтобы его не обидеть!",
+                LocalDateTime.of(2025, 2, 15, 15, 55), Duration.ofMinutes(23));
         manager.addTask(doHomeWork);
         manager.addTask(helpToFriend);
 
@@ -42,9 +46,12 @@ class FileBackedTaskManagerTest {
         manager.addEpic(epic1);
         manager.addEpic(epic2);
 
-        Subtask subtask1 = new Subtask("Найти 100 рублей", "Чтобы оплатить мойку!", epic1.getId());
-        Subtask subtask2 = new Subtask("Доехать на машине до мойки", "Чтобы помыть", epic1.getId());
-        Subtask subtask3 = new Subtask("Найти отвертку", "Искать на балконе", epic2.getId());
+        Subtask subtask1 = new Subtask("Найти 100 рублей", "Чтобы оплатить мойку!", epic1.getId(),
+                LocalDateTime.of(2025, 2, 15, 14, 10), Duration.ofMinutes(23));
+        Subtask subtask2 = new Subtask("Доехать на машине до мойки", "Чтобы помыть", epic1.getId(),
+                LocalDateTime.of(2025, 2, 17, 14, 10), Duration.ofMinutes(23));
+        Subtask subtask3 = new Subtask("Найти отвертку", "Искать на балконе", epic2.getId(),
+                LocalDateTime.of(2025, 2, 19, 14, 10), Duration.ofMinutes(23));
         manager.addSubtask(subtask1);
         manager.addSubtask(subtask2);
         manager.addSubtask(subtask3);

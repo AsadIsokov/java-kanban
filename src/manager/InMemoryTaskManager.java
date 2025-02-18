@@ -5,9 +5,8 @@ import model.TaskStatus;
 import model.Subtask;
 import model.Task;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.time.Duration;
+import java.util.*;
 
 public class InMemoryTaskManager implements TaskManager {
     protected static int count = 1;
@@ -19,6 +18,7 @@ public class InMemoryTaskManager implements TaskManager {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private HashMap<Integer, Epic> epics = new HashMap<>();
+    private TreeSet<Task> prioritizedTasks = new TreeSet<>(Comparator.comparing(Task::getStartTime));
 
     public HistoryManager historyManager = Managers.getDefaultHistory();
 
@@ -72,17 +72,38 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void addTask(Task task) {
+        if (task.getStartTime() == null) {
+            throw new IllegalArgumentException("Задача должна иметь время начала.");
+        }
+
+        if (checkIntersection(task)) {
+            throw new IllegalArgumentException("Задача пересекается по времени с существующими задачами.");
+        }
         task.setId(getCount());
         tasks.put(task.getId(), task);
     }
 
     @Override
     public void addSubtask(Subtask subtask) {
-        subtask.setId(getCount());
-        subtasks.put(subtask.getId(), subtask);
-        epics.get(subtask.getEpicId()).addSubtasks(subtask);
-        updateEpic(epics.get(subtask.getEpicId()));
-        statusControl(epics.get(subtask.getEpicId()));
+        try {
+            if (subtask.getStartTime() == null) {
+                throw new ManagerSaveException("Задача должна иметь время начала.");
+            }
+            if (checkIntersection(subtask)) {
+                throw new ManagerSaveException("Задача пересекается по времени с существующими задачами.");
+            }
+            subtask.setId(getCount());
+            subtasks.put(subtask.getId(), subtask);
+            epics.get(subtask.getEpicId()).addSubtasks(subtask);
+            updateEpic(epics.get(subtask.getEpicId()));
+            epics.get(subtask.getEpicId()).startTimeOfEpic();
+            epics.get(subtask.getEpicId()).durationOfEpic();
+            statusControl(epics.get(subtask.getEpicId()));
+        } catch (ManagerSaveException e) {
+            System.out.println("Ошибка добавления подзадачи: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Ошибка: Epic не найден. " + e.getMessage());
+        }
     }
 
     @Override
@@ -162,6 +183,8 @@ public class InMemoryTaskManager implements TaskManager {
     private void statusControl(Epic epic) {
         if (epic.getSubtasks().isEmpty()) {
             epic.setStatus(TaskStatus.NEW);
+            epic.setDuration(Duration.ZERO);
+            epic.setStartTime(null);
         } else {
             int countNewSubtask = 0;
             int countDoneSubtask = 0;
@@ -188,4 +211,23 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    public TreeSet<Task> getPrioritizedTasks() {
+        tasks.values().stream()
+                .filter(task -> task.getStartTime() != null)
+                .forEach(prioritizedTasks::add);
+        subtasks.values().stream()
+                .filter(subtask -> subtask.getStartTime() != null)
+                .forEach(prioritizedTasks::add);
+        return prioritizedTasks;
+    }
+
+    private boolean checkIntersection(Task task) {
+        return getPrioritizedTasks().stream()
+                .anyMatch(existingTask -> checkIntersectionTwoTasks(existingTask, task));
+    }
+
+    private boolean checkIntersectionTwoTasks(Task task1, Task task2) {
+        return task1.getStartTime().isBefore(task2.getEndTime()) &&
+                task1.getEndTime().isAfter(task2.getStartTime());
+    }
 }

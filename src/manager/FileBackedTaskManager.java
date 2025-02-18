@@ -62,7 +62,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     private void save() throws ManagerSaveException {
         try (FileWriter fw = new FileWriter(memoryFile, StandardCharsets.UTF_8)) {
-            fw.write("id,type,name,status,description,epic\n");
+            fw.write("id,type,name,status,description,epic,startTime,duration\n");
             for (Task task : getTasks()) {
                 fw.write(CSVFormat.toString(task));
             }
@@ -92,7 +92,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     fbt.addSubtask((Subtask) CSVFormat.fromString(str));
                 }
             }
-
             return fbt;
         } catch (IOException e) {
             throw new ManagerSaveException(e.getMessage());
