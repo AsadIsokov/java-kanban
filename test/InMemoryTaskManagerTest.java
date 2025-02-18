@@ -32,7 +32,8 @@ class InMemoryTaskManagerTest {
 
     @Test
     void shouldAddAllTypesTasksAndFindThemById() {
-        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!");
+        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!",
+                LocalDateTime.of(2025, 2, 15, 21, 55), Duration.ofMinutes(23));
         manager.addTask(doHomeWork);
 
         Epic epic = new Epic("Помыть машину!", "Мойка - самообслуживание!");

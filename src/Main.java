@@ -27,16 +27,18 @@ public class Main {
                 LocalDateTime.of(2025, 2, 15, 12, 54), Duration.ofMinutes(5));
         manager2.addSubtask(subtask1);
         Subtask subtask2 = new Subtask("Доехать на машине до мойки", "Чтобы помыть", epic1.getId(),
-                LocalDateTime.of(2025, 2, 15, 12, 55), Duration.ofMinutes(23));
+                LocalDateTime.of(2025, 2, 15, 14, 15), Duration.ofMinutes(23));
         manager2.addSubtask(subtask2);
         Subtask subtask3 = new Subtask("Найти отвертку", "Искать на балконе", epic2.getId(),
-                LocalDateTime.of(2025, 2, 15, 12, 57), Duration.ofMinutes(23));
+                LocalDateTime.of(2025, 2, 15, 18, 57), Duration.ofMinutes(23));
         manager2.addSubtask(subtask3);
 
         FileBackedTaskManager manager1 = FileBackedTaskManager.loadFromFile(new File("tasks.txt"));
         System.out.println(manager1.getTasks());
         System.out.println(manager1.getEpics());
         System.out.println(manager1.getSubtasks());
+        System.out.println(manager1.getPrioritizedTasks());
+
     }
 
     private static void printAllTasks(InMemoryTaskManager manager) {

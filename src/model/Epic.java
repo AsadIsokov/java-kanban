@@ -14,10 +14,10 @@ public class Epic extends Task {
     ArrayList<Subtask> subtasks = new ArrayList<>();
 
     public void startTimeOfEpic() {
-        List<Subtask> sortedListByDuration = subtasks.stream()
-                .sorted(Comparator.comparingLong(Subtask::getSubtaskMinute))
+        List<Subtask> sortedListByStartTime = subtasks.stream()
+                .sorted(Comparator.comparing(Subtask::getStartTime))
                 .toList();
-        this.setStartTime(sortedListByDuration.get(0).getStartTime());
+        this.setStartTime(sortedListByStartTime.get(0).getStartTime());
     }
 
     public void durationOfEpic() {
@@ -29,7 +29,10 @@ public class Epic extends Task {
 
     @Override
     public LocalDateTime getEndTime() {
-        return this.startTime.plusMinutes(this.duration.toMinutes());
+        List<Subtask> sortedListByEndTime = subtasks.stream()
+                .sorted(Comparator.comparing(Subtask::getEndTime).reversed())
+                .toList();
+        return sortedListByEndTime.get(0).getEndTime();
     }
 
     public ArrayList<Subtask> getSubtasks() {

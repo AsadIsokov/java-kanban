@@ -79,7 +79,7 @@ public class Task {
     }
 
     public LocalDateTime getEndTime() {
-        return (startTime.plus(duration));
+        return startTime.plus(duration);
     }
 
     @Override

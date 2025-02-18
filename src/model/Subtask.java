@@ -15,10 +15,6 @@ public class Subtask extends Task {
         return epicId;
     }
 
-    public long getSubtaskMinute() {
-        return this.getDuration().toMinutes();
-    }
-
 
     @Override
     public String toString() {
