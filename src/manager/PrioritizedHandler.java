@@ -11,7 +11,8 @@ import java.util.TreeSet;
 
 public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
     private final TaskManager taskManager;
-    public PrioritizedHandler(TaskManager taskManager){
+
+    public PrioritizedHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -26,7 +27,7 @@ public class PrioritizedHandler extends BaseHttpHandler implements HttpHandler {
             TreeSet<Task> prioritized = taskManager.getPrioritizedTasks();
             String response = gson.toJson(prioritized);
             sendText(exchange, response);
-        } else{
+        } else {
             sendRequestError(exchange);
         }
     }

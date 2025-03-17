@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
     private final TaskManager taskManager;
-    public SubtaskHandler(TaskManager taskManager){
+
+    public SubtaskHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -37,14 +38,14 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private void handleGet(HttpExchange exchange) throws IOException{
-        exchange.sendResponseHeaders(200,-1);
+    private void handleGet(HttpExchange exchange) throws IOException {
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
-        if (path.split("/")[2].isEmpty()){
+        if (path.split("/")[2].isEmpty()) {
             ArrayList<Subtask> subtasks = taskManager.getSubtasks();
             String response = gson.toJson(subtasks);
             sendText(exchange, response);
-        } else{
+        } else {
             Subtask subtask = taskManager.getSubtaskById(Integer.parseInt(path.split("/")[2]));
             String response = gson.toJson(subtask);
             sendText(exchange, response);
@@ -52,20 +53,20 @@ public class SubtaskHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     private void handlePost(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(201,-1);
+        exchange.sendResponseHeaders(201, -1);
         String path = exchange.getRequestURI().getPath();
         BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
         Subtask subtask = gson.fromJson(reader, Subtask.class);
-        if (path.split("/")[2].isEmpty()){
+        if (path.split("/")[2].isEmpty()) {
             taskManager.addSubtask(subtask);
-        } else{
+        } else {
             taskManager.updateSubtask(subtask);
         }
         sendText(exchange, gson.toJson(subtask));
     }
 
     private void handleDelete(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(200,-1);
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
         taskManager.deleteSubtaskById(Integer.parseInt(path.split("/")[2]));
         sendText(exchange, "Был вызван метод DELETE! Подзадача удалена!");

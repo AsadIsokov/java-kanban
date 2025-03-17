@@ -15,7 +15,7 @@ public class HttpTaskServer {
     private HttpServer httpServer;
     private TaskManager taskManager;
 
-    public HttpTaskServer(TaskManager taskManager){
+    public HttpTaskServer(TaskManager taskManager) {
         this.taskManager = taskManager;
         try {
             httpServer = HttpServer.create(new InetSocketAddress(PORT), 0);
@@ -24,17 +24,17 @@ public class HttpTaskServer {
             httpServer.createContext("/epics", new EpicHandler(taskManager));
             httpServer.createContext("/history", new HistoryHandler(taskManager));
             httpServer.createContext("/prioritized", new PrioritizedHandler(taskManager));
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("Ошибка во время создании сервера!");
         }
     }
 
-    public void start(){
+    public void start() {
         httpServer.start();
         System.out.println("Сервер запущен! ПОРТ: " + PORT);
     }
 
-    public void stop(){
+    public void stop() {
         httpServer.stop(0);
         System.out.println("Сервер остановлен!");
     }

@@ -15,7 +15,8 @@ import java.util.ArrayList;
 
 public class TaskHandler extends BaseHttpHandler implements HttpHandler {
     private final TaskManager taskManager;
-    public TaskHandler(TaskManager taskManager){
+
+    public TaskHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -36,14 +37,14 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private void handleGet(HttpExchange exchange) throws IOException{
-        exchange.sendResponseHeaders(200,-1);
+    private void handleGet(HttpExchange exchange) throws IOException {
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
-        if (path.split("/")[2].isEmpty()){
+        if (path.split("/")[2].isEmpty()) {
             ArrayList<Task> tasks = taskManager.getTasks();
             String response = gson.toJson(tasks);
             sendText(exchange, response);
-        } else{
+        } else {
             Task task = taskManager.getTaskById(Integer.parseInt(path.split("/")[2]));
             String response = gson.toJson(task);
             sendText(exchange, response);
@@ -51,20 +52,20 @@ public class TaskHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     private void handlePost(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(201,-1);
+        exchange.sendResponseHeaders(201, -1);
         String path = exchange.getRequestURI().getPath();
         BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
         Task task = gson.fromJson(reader, Task.class);
-        if (path.split("/")[2].isEmpty()){
+        if (path.split("/")[2].isEmpty()) {
             taskManager.addTask(task);
-        } else{
+        } else {
             taskManager.updateTask(task);
         }
         sendText(exchange, gson.toJson(task));
     }
 
     private void handleDelete(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(200,-1);
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
         taskManager.deleteTaskById(Integer.parseInt(path.split("/")[2]));
         sendText(exchange, "Был вызван метод DELETE! Задача удалена!");

@@ -11,7 +11,8 @@ import java.util.List;
 
 public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
     private final TaskManager taskManager;
-    public HistoryHandler(TaskManager taskManager){
+
+    public HistoryHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -26,7 +27,7 @@ public class HistoryHandler extends BaseHttpHandler implements HttpHandler {
             List<Task> historyList = taskManager.getHistory();
             String response = gson.toJson(historyList);
             sendText(exchange, response);
-        } else{
+        } else {
             sendRequestError(exchange);
         }
     }

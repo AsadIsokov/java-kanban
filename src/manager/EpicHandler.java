@@ -16,7 +16,8 @@ import java.util.ArrayList;
 
 public class EpicHandler extends BaseHttpHandler implements HttpHandler {
     private final TaskManager taskManager;
-    public EpicHandler(TaskManager taskManager){
+
+    public EpicHandler(TaskManager taskManager) {
         this.taskManager = taskManager;
     }
 
@@ -37,20 +38,20 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
         }
     }
 
-    private void handleGet(HttpExchange exchange) throws IOException{
-        exchange.sendResponseHeaders(200,-1);
+    private void handleGet(HttpExchange exchange) throws IOException {
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
         String[] pathArray = path.split("/");
-        if (pathArray.length > 3 && pathArray[3].equals("subtask")){
+        if (pathArray.length > 3 && pathArray[3].equals("subtask")) {
             ArrayList<Subtask> subtasksOfEpic = taskManager.getSubtasksOfEpic(taskManager.getEpics()
                     .get(Integer.parseInt(pathArray[2])));
             String response = gson.toJson(subtasksOfEpic);
             sendText(exchange, response);
-        } else if (pathArray.length == 3){
+        } else if (pathArray.length == 3) {
             Epic epic = taskManager.getEpicById(Integer.parseInt(pathArray[2]));
             String response = gson.toJson(epic);
             sendText(exchange, response);
-        } else{
+        } else {
             ArrayList<Epic> epics = taskManager.getEpics();
             String response = gson.toJson(epics);
             sendText(exchange, response);
@@ -58,7 +59,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     private void handlePost(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(201,-1);
+        exchange.sendResponseHeaders(201, -1);
         BufferedReader reader = new BufferedReader(new InputStreamReader(exchange.getRequestBody()));
         Epic epic = gson.fromJson(reader, Epic.class);
         taskManager.addEpic(epic);
@@ -66,7 +67,7 @@ public class EpicHandler extends BaseHttpHandler implements HttpHandler {
     }
 
     private void handleDelete(HttpExchange exchange) throws IOException {
-        exchange.sendResponseHeaders(200,-1);
+        exchange.sendResponseHeaders(200, -1);
         String path = exchange.getRequestURI().getPath();
         String[] pathArray = path.split("/");
         taskManager.deleteEpicById(Integer.parseInt(pathArray[2]));
