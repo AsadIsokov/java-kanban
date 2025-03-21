@@ -1,12 +1,10 @@
-package manager;
+package httpServer;
 
 import com.sun.net.httpserver.HttpServer;
-import model.Task;
+import manager.*;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class HttpTaskServer {
     private static final int PORT = 8080;
@@ -39,12 +37,6 @@ public class HttpTaskServer {
 
     public static void main(String[] args) {
         TaskManager manager = Managers.getDefault();
-        Task doHomeWork = new Task("Сделать дз!", "До дедлайна нужно сдать!",
-                LocalDateTime.of(2025, 2, 15, 10, 10), Duration.ofMinutes(5));
-        Task helpToFriend = new Task("Помочь другу!", "Помочь чтобы его не обидеть!",
-                LocalDateTime.of(2025, 2, 15, 10, 30), Duration.ofMinutes(10));
-        manager.addTask(doHomeWork);
-        manager.addTask(helpToFriend);
         HttpTaskServer httpTaskServer = new HttpTaskServer(manager);
         httpTaskServer.start();
     }
