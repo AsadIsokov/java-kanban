@@ -1,7 +1,7 @@
 import com.google.gson.*;
-import httpServer.DurationAdapter;
-import httpServer.HttpTaskServer;
-import httpServer.LocalDateTimeAdapter;
+import http.DurationAdapter;
+import http.HttpTaskServer;
+import http.LocalDateTimeAdapter;
 import manager.InMemoryTaskManager;
 import manager.TaskManager;
 import model.Epic;
