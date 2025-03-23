@@ -20,6 +20,8 @@ public class Task {
         this.name = name;
         this.description = description;
         this.status = TaskStatus.NEW;
+        this.startTime = LocalDateTime.now();
+        this.duration = Duration.ofMinutes(1);
     }
 
     public Task(String name, String description, LocalDateTime startTime, Duration duration) {

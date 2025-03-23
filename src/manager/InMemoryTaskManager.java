@@ -94,11 +94,13 @@ public class InMemoryTaskManager implements TaskManager {
             }
             subtask.setId(getCount());
             subtasks.put(subtask.getId(), subtask);
-            epics.get(subtask.getEpicId()).addSubtasks(subtask);
-            updateEpic(epics.get(subtask.getEpicId()));
-            epics.get(subtask.getEpicId()).startTimeOfEpic();
-            epics.get(subtask.getEpicId()).durationOfEpic();
-            statusControl(epics.get(subtask.getEpicId()));
+            if (epics.containsKey(subtask.getEpicId())) {
+                epics.get(subtask.getEpicId()).addSubtasks(subtask);
+                updateEpic(epics.get(subtask.getEpicId()));
+                epics.get(subtask.getEpicId()).startTimeOfEpic();
+                epics.get(subtask.getEpicId()).durationOfEpic();
+                statusControl(epics.get(subtask.getEpicId()));
+            }
         } catch (ManagerSaveException e) {
             System.out.println("Ошибка добавления подзадачи: " + e.getMessage());
         } catch (NullPointerException e) {
@@ -170,7 +172,9 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void deleteSubtaskById(int id) {
         if (subtasks.containsKey(id)) {
-            epics.get(subtasks.get(id).getEpicId()).deleteSubtask(id);
+            if (epics.containsKey(subtasks.get(id).getEpicId())) {
+                epics.get(subtasks.get(id).getEpicId()).deleteSubtask(id);
+            }
             subtasks.remove(id);
         }
     }
@@ -211,6 +215,7 @@ public class InMemoryTaskManager implements TaskManager {
         return historyManager.getHistory();
     }
 
+    @Override
     public TreeSet<Task> getPrioritizedTasks() {
         tasks.values().stream()
                 .filter(task -> task.getStartTime() != null)
